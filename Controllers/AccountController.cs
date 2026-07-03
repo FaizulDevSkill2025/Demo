@@ -56,6 +56,7 @@ namespace Demo.Controllers
         }
 
         [HttpPost]
+
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Register model)
         {
@@ -69,7 +70,7 @@ namespace Demo.Controllers
                 UserName = model.Email,
                 NormalizedUserName = model.Email.ToUpper(),
                 Email = model.Email,
-                NormalizedEmail = model.Email.ToUpper(),
+                NormalizedEmail = model.Email.ToLower(),
                 Password = model.Password
             };
 
@@ -88,6 +89,7 @@ namespace Demo.Controllers
                 await userManager.AddToRoleAsync(user, "User");
 
                 await signInManager.SignInAsync(user, isPersistent: false);
+
                 return RedirectToAction("Login", "Account");
             }
 
@@ -106,6 +108,7 @@ namespace Demo.Controllers
         }
 
         [HttpPost]
+
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VerifyEmail(VerifyEmail model)
         {
@@ -159,6 +162,7 @@ namespace Demo.Controllers
             if (result.Succeeded)
             {
                 result = await userManager.AddPasswordAsync(user, model.NewPassword);
+
                 return RedirectToAction("Login", "Account");
             }
             else
@@ -173,6 +177,7 @@ namespace Demo.Controllers
         }
 
         [HttpPost]
+
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {

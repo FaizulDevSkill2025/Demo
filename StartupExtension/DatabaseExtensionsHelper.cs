@@ -20,6 +20,7 @@ namespace Demo.StartupExtension
 
             services.AddIdentity<Users, IdentityRole>(options =>
             {
+                options.Password.RequireDigit = true;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequiredLength = 16;
                 options.Password.RequireUppercase = true;
