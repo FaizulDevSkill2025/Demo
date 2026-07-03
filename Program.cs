@@ -1,7 +1,13 @@
+using Demo.StartupExtension;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddRazorPages();
+
+builder.Services.AddDatabaseExtensionHelper(builder.Configuration); // Database Configuration
 
 var app = builder.Build();
 
@@ -13,12 +19,21 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
+
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.UseStaticFiles();
+
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
