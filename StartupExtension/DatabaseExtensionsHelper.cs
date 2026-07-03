@@ -1,4 +1,5 @@
 ﻿using Demo.Data;
+using Demo.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,18 @@ namespace Demo.StartupExtension
             });
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<Users, IdentityRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 16;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedAccount = true;
+                options.SignIn.RequireConfirmedEmail = false; 
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
             return services;
         }
